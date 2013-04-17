@@ -1,4 +1,11 @@
-1. Clone into ~/.middleman
+#### Clone into ~/.middleman
 
-2. middleman new something-great --template=middleman-html5
+```shell
+mkdir -p ~/.middleman && cd ~/.middleman && git clone git://github.com/erickreutz/middleman-html5.git
+```
 
+#### Use the template
+
+```shell
+middleman new something-great --template=middleman-html5
+```
