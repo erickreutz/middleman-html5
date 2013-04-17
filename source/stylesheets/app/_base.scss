@@ -1,0 +1,33 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: $background-color;
+  font-family: $base-font-family;
+  font-weight: $base-font-weight;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  color: $base-text-color;
+}
+
+.group { @include clearfix; }
+
+input::-moz-focus-inner {
+  border: 0;
+}
+
+a:hover,
+a:active,
+a:focus,
+a img,
+object,
+embed {
+  outline: 0;
+}

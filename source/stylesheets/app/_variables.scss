@@ -1,0 +1,49 @@
+@import "neat-helpers";
+
+/////////////////////////////////////////////////////////
+// Breakpoints
+////////////////////////////////////////////////////////
+$mobile-portrait: new-breakpoint(min-width 320px);
+$mobile-landscape: new-breakpoint(min-width 480px);
+$tablet-portrait: new-breakpoint(min-width 768px);
+$tablet-landscape: new-breakpoint(min-width 1024px);
+$desktop: new-breakpoint(min-width 1382px);
+
+/////////////////////////////////////////////////////////
+// Colors
+////////////////////////////////////////////////////////
+$blue-color: #1474be;
+$background-color: #f4f4f4;
+$link-color: $blue-color;
+
+/////////////////////////////////////////////////////////
+// Type
+////////////////////////////////////////////////////////
+$base-font-size: 13px;
+$base-font-weight: 300;
+$base-font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$base-text-color: #767676;
+$base-line-height: 21px;
+
+$headings-font-family: inherit;
+$headings-font-weight: bold;
+$headings-color: #272727;
+
+/////////////////////////////////////////////////////////
+// Mixins
+////////////////////////////////////////////////////////
+@mixin background-clip($clip: padding-box) {
+  @include prefixer(background-clip, $clip, webkit moz spec);
+}
+
+@mixin font-smoothing($smoothing: antialiased) {
+  @include prefixer(font-smoothing, $smoothing, webkit moz spec);
+}
+
+@mixin filter($var) {
+  -webkit-filter: $var;
+  -moz-filter: $var;
+  -ms-filter: $var;
+  -o-filter: $var;
+  filter: $var;
+}
