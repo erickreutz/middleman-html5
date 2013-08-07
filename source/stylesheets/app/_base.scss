@@ -1,21 +1,23 @@
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  font-size: 62.5%;
   background: none;
 }
 
 html, body {
-  width: 100%;
   min-height: 100%;
 }
 
 body {
-  background: $background-color;
+  background:  $background-color;
   font-family: $base-font-family;
   font-weight: $base-font-weight;
-  font-size: $base-font-size;
+  font-size:   $base-font-size;
   line-height: $base-line-height;
-  color: $base-text-color;
+  font-size:   $base-font-size;
+  color:       $base-text-color;
+  text-rendering: optimizeLegibility;
 }
 
 .group { @include clearfix; }
