@@ -3,5 +3,7 @@
 .sass-cache
 .bundle
 bin
+.tmp
+node_modules
 
 build

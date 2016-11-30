@@ -12,20 +12,20 @@ set :images_dir, 'images'
 
 activate :directory_indexes
 
-activate :autoprefixer do |config|
-  config.browsers = [
-    'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6',
-    'android 4'
-  ]
-end
+# activate :autoprefixer do |config|
+#   config.browsers = [
+#     'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6',
+#     'android 4'
+#   ]
+# end
 
-#-----------------------------------------------------------------------------
-# Misc
-#-----------------------------------------------------------------------------
-
-after_configuration do
-  sprockets.append_path File.join '#{root}', 'node_modules'
-end
+activate :external_pipeline,
+         name: :webpack,
+         command: build? ?
+         './node_modules/webpack/bin/webpack.js --bail -p' :
+         './node_modules/webpack/bin/webpack.js --watch -d --progress --color',
+         source: '.tmp/dist',
+         latency: 1
 
 #-----------------------------------------------------------------------------
 # Development
@@ -33,7 +33,7 @@ end
 
 configure :development do
   activate :livereload
-  activate :dotenv
+  # activate :dotenv
 end
 
 #-----------------------------------------------------------------------------
@@ -41,10 +41,8 @@ end
 #-----------------------------------------------------------------------------
 
 configure :build do
-  set :build_dir, './build'
-
-  ignore 'stylesheets/app/*'
-  ignore 'javascripts/app/*'
+  # "Ignore" JS so webpack has full control.
+  ignore { |path| path =~ /\/(.*)\.js$/ && $1 != 'site' }
 
   activate :gzip
   activate :asset_hash

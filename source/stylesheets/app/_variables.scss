@@ -1,5 +1,3 @@
-@import "neat-helpers";
-
 /////////////////////////////////////////////////////////
 // Breakpoints
 ////////////////////////////////////////////////////////
@@ -32,18 +30,18 @@ $headings-color: #272727;
 /////////////////////////////////////////////////////////
 // Mixins
 ////////////////////////////////////////////////////////
-@mixin background-clip($clip: padding-box) {
-  @include prefixer(background-clip, $clip, webkit moz spec);
-}
-
-@mixin font-smoothing($smoothing: antialiased) {
-  @include prefixer(font-smoothing, $smoothing, webkit moz spec);
-}
-
-@mixin filter($var) {
-  -webkit-filter: $var;
-  -moz-filter: $var;
-  -ms-filter: $var;
-  -o-filter: $var;
-  filter: $var;
-}
+// @mixin background-clip($clip: padding-box) {
+//   @include prefixer(background-clip, $clip, webkit moz spec);
+// }
+//
+// @mixin font-smoothing($smoothing: antialiased) {
+//   @include prefixer(font-smoothing, $smoothing, webkit moz spec);
+// }
+//
+// @mixin filter($var) {
+//   -webkit-filter: $var;
+//   -moz-filter: $var;
+//   -ms-filter: $var;
+//   -o-filter: $var;
+//   filter: $var;
+// }
