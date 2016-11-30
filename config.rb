@@ -1,93 +1,80 @@
-###
-# Compass
-###
-
-# Susy grids in Compass
-# First: gem install susy --pre
-# require 'susy'
-
-# Change Compass configuration
-# compass_config do |config|
-#   config.output_style = :compact
-# end
-
-###
-# Page options, layouts, aliases and proxies
-###
-
-# Per-page layout changes:
-#
-# With no layout
-# page "/path/to/file.html", :layout => false
-#
-# With alternative layout
-# page "/path/to/file.html", :layout => :otherlayout
-#
-# A path which all have the same layout
-# with_layout :admin do
-#   page "/admin/*"
-# end
-
-# Proxy (fake) files
-# page "/this-page-has-no-template.html", :proxy => "/template-file.html" do
-#   @which_fake_page = "Rendering a fake page with a variable"
-# end
-
-###
-# Helpers
-###
-
-# Automatic image dimensions on image_tag helper
-# activate :automatic_image_sizes
-
-# Methods defined in the helpers block are available in templates
-# helpers do
-#   def some_helper
-#     "Helping"
-#   end
-# end
-
-
-activate :livereload
-activate :neat
-activate :bourbon
+#-----------------------------------------------------------------------------
+# Directories
+#-----------------------------------------------------------------------------
 
 set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
-# activate :sync do |sync|
-#   sync.fog_provider = 'AWS' # Your storage provider
-#   sync.fog_directory = '' # Your bucket name
-#   sync.fog_region = 'us-east-1' # The region your storage bucket is in (eg us-east-1, us-west-1, eu-west-1, ap-southeast-1 )
-#   sync.aws_access_key_id = '' # Your Amazon S3 access key
-#   sync.aws_secret_access_key = '' # Your Amazon S3 access secret
-#   sync.existing_remote_files = 'delete' # What to do with your existing remote files? ( keep or delete )
-#   # sync.gzip_compression = false # Automatically replace files with their equivalent gzip compressed version
-#   # sync.after_build = false # Disable sync to run after Middleman build ( defaults to true )
-# end
+#-----------------------------------------------------------------------------
+# Plugins
+#-----------------------------------------------------------------------------
 
-# Build-specific configuration
+activate :directory_indexes
+
+activate :autoprefixer do |config|
+  config.browsers = [
+    'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6',
+    'android 4'
+  ]
+end
+
+#-----------------------------------------------------------------------------
+# Misc
+#-----------------------------------------------------------------------------
+
+after_configuration do
+  sprockets.append_path File.join '#{root}', 'node_modules'
+end
+
+#-----------------------------------------------------------------------------
+# Development
+#-----------------------------------------------------------------------------
+
+configure :development do
+  activate :livereload
+  activate :dotenv
+end
+
+#-----------------------------------------------------------------------------
+# Build
+#-----------------------------------------------------------------------------
+
 configure :build do
-  # For example, change the Compass output style for deployment
-  activate :minify_css
+  set :build_dir, './build'
 
-  # Minify Javascript on build
+  ignore 'stylesheets/app/*'
+  ignore 'javascripts/app/*'
+
+  activate :gzip
+  activate :asset_hash
+  activate :minify_css
   activate :minify_javascript
 
-  # Enable cache buster
-  # activate :cache_buster
+  activate :imageoptim do |config|
+    config.manifest = true
+    config.image_extensions = %w(.png .jpg .gif .svg)
+    config.pngout = false
+    config.svgo = false
+  end
 
-  # Use relative URLs
-  # activate :relative_assets
+  activate :s3_sync do |sync|
+    sync.bucket = ENV.fetch('AWS_BUCKET_NAME')
+    sync.region = ENV.fetch('AWS_REGION')
+    sync.aws_access_key_id = ENV.fetch('AWS_ACCESS_KEY_ID')
+    sync.aws_secret_access_key = ENV.fetch('AWS_SECRET_ACCESS_KEY')
+    sync.delete = true
+    sync.path_style = true
+    sync.prefer_gzip = true
+  end
 
-  # Compress PNGs after build
-  # First: gem install middleman-smusher
-  # require "middleman-smusher"
-  # activate :smusher
+  activate :cloudfront do |cf|
+    cf.access_key_id = ENV.fetch('AWS_ACCESS_KEY_ID')
+    cf.secret_access_key = ENV.fetch('AWS_SECRET_ACCESS_KEY')
+    cf.distribution_id = ENV.fetch('AWS_DISTRIBUTION_ID')
+  end
 
-  # Or use a different image path
-  # set :http_path, "/Content/images/"
-
-  set :build_dir, './build'
+  after_s3_sync do |files_by_status|
+    invalidate files_by_status[:updated]
+  end
 end

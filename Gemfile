@@ -2,8 +2,9 @@
 # the following line to use "https"
 source 'http://rubygems.org'
 
-gem 'middleman'
-gem 'middleman-livereload', '~>3.0.1'
-gem 'middleman-sync', '~> 3.0.9'
-gem 'middleman-bourbon'
-gem 'middleman-neat'
+# Middleman Gems
+gem 'middleman', '>= 4.0.0'
+gem 'middleman-livereload'
+gem 'middleman-s3_sync', '~> 4.0.3'
+gem 'middleman-autoprefixer'
+gem 'middleman-imageoptim'

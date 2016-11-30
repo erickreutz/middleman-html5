@@ -1,0 +1,19 @@
+{
+  "name": "middleman-html5",
+  "version": "0.0.0",
+  "description": "HTML5 Boilerplate for Middleman",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erickreutz/middleman-html5.git"
+  },
+  "author": "Eric Kreutzer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erickreutz/middleman-html5/issues"
+  },
+  "homepage": "https://github.com/erickreutz/middleman-html5#readme"
+}
